@@ -36,6 +36,70 @@ public class AlgoritmosEscalonamento implements Comparator<Processo> {
         Collections.sort(listaSjf, new AlgoritmosEscalonamento());
         return listaSjf;
     }
+    
+    public ArrayList<Processo> tempoEsperaRoundRobin(ArrayList<Processo> listaSubdividida, ArrayList<Processo> listaOriginal) {
+        ArrayList<Processo> listaCompleta = new ArrayList<>();
+        
+        for(Processo p : listaOriginal){//B
+            int tempoProcesso = p.getTempoNecessario();//B = 10
+            String nome = p.getNome();//B
+            int contadorTempo = 0;
+            int somaTempo = 0;
+            for(Processo p3 : listaSubdividida){//A
+                if(!nome.equals(p3.getNome())){//B -- A
+                    somaTempo = somaTempo + p3.getTempoNecessario();//2
+                }else{
+                    contadorTempo = contadorTempo + p3.getTempoNecessario();//2
+                }
+                if(contadorTempo == tempoProcesso){//2 -- 5
+                    break;
+                }
+            }
+            p.setTempoEspera(somaTempo);
+            p.setTempoTurnaround(somaTempo + tempoProcesso);
+            listaCompleta.add(p);
+        } 
+        return listaCompleta;
+    }
+     
+    public ArrayList<Processo> roundRobin(ArrayList<Processo> p, int quantum) {
+        ArrayList<Processo> listaFatiada = new ArrayList<>();
+        for (Processo p1 : p) {
+            int id = 1;
+            if (p1.getTempoNecessario() >= quantum) {//10 - q=2
+                while (p1.getTempoNecessario() > quantum) {
+                    int sobra = subdividirProcesso(p1, quantum);//8
+                    int retirado = quantum;//2
+                    if (sobra <= retirado && sobra != 0) {//8 -- 2
+                        p1.setTempoNecessario(sobra);
+                        String nome = p1.getNome();
+
+                        listaFatiada.add(new Processo(id, nome, retirado));
+                        id++;
+                        listaFatiada.add(new Processo(id, nome, sobra));
+                    } else {
+                        p1.setId(id);
+                        p1.setTempoNecessario(sobra);
+                        String nome = p1.getNome();
+                        int tempo = p1.getTempoNecessario();
+                        listaFatiada.add(new Processo(id, nome, quantum));
+                    }
+                    id++;
+                }
+            } else {
+                p1.setId(id);
+                listaFatiada.add(p1);
+                id++;
+            }
+        }
+        Collections.sort(listaFatiada);
+        return listaFatiada;
+    }
+
+    private int subdividirProcesso(Processo p, int quantum) {
+        int valor = p.getTempoNecessario() - quantum;
+        return valor;
+    }
 
     @Override
     public int compare(Processo p1, Processo p2) {

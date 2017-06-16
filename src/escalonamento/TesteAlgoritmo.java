@@ -34,5 +34,30 @@ public class TesteAlgoritmo {
                     " Tempo Turnaround: " + p.getTempoTurnaround() + 
                     " Tempo de espera: " + p.getTempoEspera());
         }
+        
+        //TESTE PARA O MÉTODO ROUNDROBIN
+        
+        ArrayList<Processo> novaLista = alg.roundRobin(lp, 2);
+        System.out.println(novaLista.size());
+        for(Processo p : novaLista){
+            System.out.println(p.getId() + ") " + p.getNome() + 
+                    " Tempo necessário: " + p.getTempoNecessario() +
+                    " Tempo Turnaround: " + p.getTempoTurnaround() + 
+                    " Tempo de espera: " + p.getTempoEspera());
+        }
+        
+        //TESTEPARA O MÉTODO TEMPOESPERA(RoundRobin)
+       
+        System.out.println("----------------------------------------------------------------");
+        
+        ArrayList<Processo> listaSubdividida = alg3.roundRobin(lp3, 2);
+        ArrayList<Processo> listaCompleta = alg2.tempoEsperaRoundRobin(listaSubdividida, lp2);
+        
+        for(Processo p : listaCompleta){
+            System.out.println(p.getId() + ") " + p.getNome() + 
+                    " Tempo necessário: " + p.getTempoNecessario() +
+                    " Tempo Turnaround: " + p.getTempoTurnaround() + 
+                    " Tempo de espera: " + p.getTempoEspera());
+        }
     }
 }

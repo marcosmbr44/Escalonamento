@@ -15,7 +15,7 @@ public class LeitorArquivo {
     
     private ArrayList<Processo> processos  = new ArrayList<>();
     private String[] letraProcesso = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
-    //private File arquivo = new File("C:\\Users\\pmrn\\Documents\\NetBeansProjects\\AlgoritmosEscalonamento\\src\\java\\escalonamento\\processos.txt");
+    
     private File arquivo = new File("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\Escalonadores\\src\\escalonamento\\processos.txt");
 
     public ArrayList leitorDeArquivo(){
